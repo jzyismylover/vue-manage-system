@@ -1,39 +1,40 @@
 <template>
-    <!--构造多层嵌套的导航栏-->
-    <div class="sidebar">
-        <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#324157"
-            text-color="#bfcbd9" active-text-color="#20a0ff" unique-opened router>
-            <template v-for="item in items">
-                <template v-if="item.subs">
-                    <el-submenu :index="item.index" :key="item.index">
-                        <template #title>
-                            <i :class="item.icon"></i>
-                            <span>{{ item.title }}</span>
-                        </template>
-                        <template v-for="subItem in item.subs">
-                            <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
-                                <template #title>{{ subItem.title }}</template>
-                                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
-                                    {{ threeItem.title }}</el-menu-item>
-                            </el-submenu>
-                            <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}
-                            </el-menu-item>
-                        </template>
-                    </el-submenu>
-                </template>
-                <template v-else>
-                    <el-menu-item :index="item.index" :key="item.index">
-                        <i :class="item.icon"></i>
-                        <template #title>{{ item.title }}</template>
-                    </el-menu-item>
-                </template>
+  <!--构造多层嵌套的导航栏-->
+  <div class="sidebar">
+    <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" background-color="#324157"
+             text-color="#bfcbd9" active-text-color="#20a0ff" unique-opened router @select="handleSelect">
+      <template v-for="item in items">
+        <template v-if="item.subs">
+          <el-submenu :index="item.index" :key="item.index">
+            <template #title>
+              <i :class="item.icon"></i>
+              <span>{{ item.title }}</span>
             </template>
-        </el-menu>
-    </div>
+            <!--当存在两个以上的菜单时需要嵌套的就会显得很多-->
+            <template v-for="subItem in item.subs">
+              <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
+                <template #title>{{ subItem.title }}</template>
+                <el-menu-item v-for="(threeItem, i) in subItem.subs" :key="i" :index="threeItem.index">
+                  {{ threeItem.title }}</el-menu-item>
+              </el-submenu>
+              <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}
+              </el-menu-item>
+            </template>
+          </el-submenu>
+        </template>
+        <template v-else>
+          <el-menu-item :class="{active:item.index===currentRoute}" :index="item.index" :key="item.index">
+            <i :class="item.icon"></i>
+            <template #title>{{ item.title }}</template>
+          </el-menu-item>
+        </template>
+      </template>
+    </el-menu>
+  </div>
 </template>
 
 <script lang='ts'>
-import { computed, defineComponent, onMounted   } from "vue";
+import { computed, defineComponent, onMounted, ref   } from "vue";
 import { StoreStatus } from "/@/store/status";
 import { useRoute } from "vue-router";
 import { items } from './constant'
@@ -58,16 +59,28 @@ export default defineComponent({
             console.log(collapse.value)
         })
 
+        // 菜单激活
+        const currentRoute = ref('');
+        const handleSelect = (...param:any[]) => {
+            const [ index ] = param;
+            currentRoute.value = index;
+        }
+
         return {
             items,
             onRoutes,
             collapse,
+            currentRoute,
+            handleSelect
         };
     },
 });
 </script>
 
 <style scoped>
+.active {
+    background-color: #152639 !important;
+}
 .sidebar {
     display: block;
     position: absolute;

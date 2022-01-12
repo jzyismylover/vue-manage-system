@@ -5,7 +5,7 @@
       <i v-if="!collapse" class="el-icon-s-fold"></i>
       <i v-else class="el-icon-s-unfold"></i>
     </div>
-    <div class="logo">后台管理系统</div>
+    <div class="logo">{{ title }}</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 消息中心 -->
@@ -47,11 +47,10 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, onMounted, defineComponent, watch, ref, watchEffect } from "vue";
+import { computed, onMounted, defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { StoreStatus } from "/@/store/status";
 import { ElTooltip, ElDropdown, ElDropdownMenu, ElDropdownItem } from "element-plus";
-import { useHandleCollapse } from "./useHandleCollapse";
 
 export default defineComponent({
   components: {
@@ -60,25 +59,29 @@ export default defineComponent({
     ElDropdownMenu,
     ElDropdownItem,
   },
-  setup() {
+  props: {
+    message: {
+      type: Number,
+    },
+  },
+  emits: ["handleCollapse", "update:message"],
+
+  setup(props, { emit }) {
     const username = localStorage.getItem("ms_username");
-    const message = 2;
 
     const collapse = computed(() => StoreStatus.collapse);
 
     // 侧边栏折叠
     const collapseChage = () => {
       StoreStatus.handleCollapse(!collapse.value);
-    };
+      // emit 主要用于触发父组件的一些事件驱动
+      // emit('bind name', ...args);
+      emit("handleCollapse", ["msg"]);
 
-    // onMounted(() => {
-    //   window.onresize = () => {
-    //     if (document.body.clientWidth < 800) {
-    //       console.log(document.body.clientWidth);
-    //       collapseChage();
-    //     }
-    //   };
-    // });
+      // 这样子的写法其实就实现了父子组件的双向绑定
+      // 两者的数据类型最好是一致的
+      emit("update:message", 5);
+    };
 
     onMounted(() => {
       if (document.body.clientWidth < 800) {
@@ -96,10 +99,12 @@ export default defineComponent({
         router.push("/user");
       }
     };
+
+    const title = ref(import.meta.env.VITE_GLOB_APP_TITLE);
     return {
       username,
-      message,
       collapse,
+      title,
       collapseChage,
       handleCommand,
     };

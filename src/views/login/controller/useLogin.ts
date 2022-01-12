@@ -37,7 +37,21 @@ export function useLogin() {
                 // 浏览器缓存 token 和 username
                 localStorage.setItem("token", 'Beaer token');
                 localStorage.setItem("ms_username", 'jzyismylover');
-                router.push("/home");
+
+                /*
+                    路由跳转传递一些参数(编程式导航)
+                    这两种写法其实都可以，尝试的过程中也探索出了一些问题
+                    path 的方式会经过 vue-router的 redirct处理，且路径上会显示 params传递的内容
+                    name 的方式是直接定位到对应组件的位置而不会二次 redirct，路径上不会显示 query传递的内容
+                */
+                // router.push({
+                //     path: '/home',
+                //     query: {}
+                // });
+                router.push({
+                    name: 'Dashboard',
+                    params: {}
+                })
             } else {
                 ElMessage.error("登录成功");
                 return false;

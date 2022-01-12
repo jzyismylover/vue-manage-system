@@ -2,3 +2,8 @@
 [class^=el-icon-lx] {
     font-family: lx-iconfont !important;
 }
+
+[class*=" lx-icon"],
+[class^=lx-icon] {
+    font-family: iconfont !important;
+}

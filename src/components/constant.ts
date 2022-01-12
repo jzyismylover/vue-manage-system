@@ -11,6 +11,11 @@ export const items = [
         title: "字段悬浮",
     },
     {
+        icon: "el-icon-lx-emoji",
+        index: "/home/goods",
+        title: "商品列表"
+    },
+    {
         icon: "el-icon-lx-copy",
         index: "/home/tabs",
         title: "tab选项卡",

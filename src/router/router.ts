@@ -46,7 +46,42 @@ const router = createRouter({
                     meta: {
                         title: '字段悬浮'
                     }
-                }
+                },
+                {
+                    path: 'goods',
+                    name: 'Goods',
+                    component: () => import('../views/home/Goods.vue')
+                },
+                {
+                    path: 'exercise',
+                    name: 'Exercise',
+                    component: () => import('../views/home/Exercise.vue')
+                },
+                {
+                    path: 'icon',
+                    name: 'Icon',
+                    component: () => import('../views/home/Icons.vue'),
+                    meta: {
+                        title: '自定义图标'
+                    }
+                },   
+                {
+                    path: 'i18n',
+                    name: 'I18n',
+                    component: () => import('../views/home/I18n.vue'),
+                    meta: {
+                        title: '国际化功能'
+                    }
+                },
+                {
+                    // 测试路由
+                    path: 'test',
+                    name: 'Test',
+                    component: () => import('../views/home/Test.vue'),
+                    meta: {
+                        title: '测试'
+                    }
+                },
             ]
         }
     ]

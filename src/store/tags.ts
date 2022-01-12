@@ -31,7 +31,7 @@ class Tags extends VuexModule {
 
   // 删除除了当前以外的所有tag
   @Mutation
-  closeTagsOther(index:number, item?:Tag) {
+  closeTagsOther(index:number) {
     this.tagsList = this.tagsList.slice(index, index+1);
   }
 }

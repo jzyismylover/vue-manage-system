@@ -1,20 +1,32 @@
 {
   "compilerOptions": {
+    // 启用实验性的 es 装饰器
     "experimentalDecorators": true,
+    // 指定 ECMAScript 目标版本，esnext为最新版本
     "target": "esnext",
+    // 指定生成哪个模块系统代码，esnext为最新版本
     "module": "esnext",
+    // 决定如何处理模块
     "moduleResolution": "node",
+    // 启动所以严格类型的检查选项
     "strict": true,
+    // 指定生成什么JSX代码
     "jsx": "react",
+    // 生成相应的 .map文件。
     "sourceMap": true,
+    // 是否允许导入 json 文件
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    // 编译过程中需要引入的库文件的列表
     "lib": ["esnext", "dom"],
+    // 解析非相对模块名的基准目录（使用别名必须配置）
     "baseUrl": "./",
+    // 模块名到基于 baseUrl的路径映射的列表（路径别名配置）
     "paths": {
       "/@/*": ["src/*"],
       "/@components/*": ["src/components/*"]
     },
   },
+  // 指定可以匹配的文件列表
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",]
 }

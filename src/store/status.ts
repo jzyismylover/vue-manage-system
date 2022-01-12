@@ -13,7 +13,7 @@ import { store } from './index'
 class Staus extends VuexModule{
 
     // 左边菜单折叠标志
-    public collapse:boolean = false;
+    public collapse = false;
     @Mutation
     handleCollapse(value:boolean) {
         this.collapse = value;

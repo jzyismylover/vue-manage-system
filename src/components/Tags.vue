@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, watch } from "vue";
+import { computed, watch, isProxy, isReadonly, isReactive } from "vue";
 import { StoreTags } from "/@/store/tags";
 import { onBeforeRouteUpdate, RouteLocationNormalized, useRoute, useRouter } from "vue-router";
 import { ElButton, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
@@ -65,7 +65,12 @@ export default {
 
     // 监听 tagList 属性
     watch(([tagsList.value]), ([oldVal], [newVal]) => {
-      console.log(oldVal, newVal);
+      // 这里可以证明的一件事是vuex 的state数据是 readonly创建的只读代理
+      // 如果更改的话会报错 which has only a getter
+      console.log("值更新");
+      console.log(isProxy(StoreTags.tagsList));
+      console.log(isReadonly(StoreTags.tagsList));
+      console.log(isReactive(StoreTags.tagsList));
     })
 
     // 设置标签

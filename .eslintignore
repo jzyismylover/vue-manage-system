@@ -1,0 +1,16 @@
+# 配置 eslint 忽略拦截的文件类型
+
+*.sh
+node_modules
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+dist
+/public
+/docs
+.husky
+.local
+/bin
+Dockerfile
